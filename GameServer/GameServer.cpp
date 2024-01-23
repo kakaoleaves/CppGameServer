@@ -1,37 +1,37 @@
 ﻿#include "pch.h"
-#include <iostream>
 #include "Corepch.h"
+#include <iostream>
 #include <thread>
+#include <atomic>
+#include <mutex>
+#include "AccountManager.h"
+#include "UserManager.h"
 
-void HelloThread() 
+void Func1()
 {
-	cout << "Hello Thread" << endl;
+	for (int32 i = 0; i < 1000; i++)
+	{
+		UserManager::GetInstance()->ProcessSave();
+	}
 }
 
-void HelloThread2(int32 num)
+void Func2()
 {
-	cout << num << endl;
+	for (int32 i = 0; i < 1000; i++)
+	{
+		AccountManager::GetInstance()->ProcessLogin();
+	}
 }
 
 int main()
 {
-	thread t1;
-	auto id = t1.get_id(); cout << id << endl; // 0
-	t1 = thread(HelloThread);
-	id = t1.get_id(); cout << id << endl; // new id
-	int32 cnt = t1.hardware_concurrency(); cout << "CPU Core Count: " << cnt << endl;
-	if (t1.joinable()) t1.join();
+	thread t1(Func1);
+	thread t2(Func2);
 
-	cout << "===================================" << endl;
+	t1.join();
+	t2.join();
 
-	vector<thread> threads;
-	for (int32 i = 0; i < 10; ++i)
-		threads.push_back(thread(HelloThread2, i));
-
-	for (auto& t : threads)
-		if (t.joinable()) t.join();
-
-	cout << "Main Thread" << endl;
+	cout << "Jobs Done" << endl;
 
 	return 0;
 }
