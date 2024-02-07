@@ -1,37 +1,46 @@
 ﻿#include "pch.h"
 #include "Corepch.h"
 #include <iostream>
-#include <thread>
 #include <atomic>
 #include <mutex>
-#include "AccountManager.h"
-#include "UserManager.h"
+#include "windows.h"
+#include <future>
+#include "ConcurrentQueue.h"
+#include "ConcurrentStack.h"
 
-void Func1()
+LockQueue<int32> q;
+LockStack<int32> s;
+
+void Push()
 {
-	for (int32 i = 0; i < 1000; i++)
+	while (true)
 	{
-		UserManager::GetInstance()->ProcessSave();
+		int32 value = rand() % 100;
+		q.Push(value);
+
+		this_thread::sleep_for(chrono::milliseconds(10));
 	}
 }
 
-void Func2()
+void Pop()
 {
-	for (int32 i = 0; i < 1000; i++)
+	while (true)
 	{
-		AccountManager::GetInstance()->ProcessLogin();
+		int32 value;
+		q.WaitPop(OUT value);
+		cout << value << endl;
 	}
 }
 
 int main()
 {
-	thread t1(Func1);
-	thread t2(Func2);
+	thread t1(Push);
+	thread t2(Pop);
+	thread t3(Pop);
 
 	t1.join();
 	t2.join();
-
-	cout << "Jobs Done" << endl;
+	t3.join();
 
 	return 0;
 }
