@@ -1,2 +1,5 @@
-D:\Inflearn\C++\CPP_Server\ServerCore\CorePch.cpp;D:\Inflearn\C++\CPP_Server\ServerCore\x64\Debug\CorePch.obj
-D:\Inflearn\C++\CPP_Server\ServerCore\pch.cpp;D:\Inflearn\C++\CPP_Server\ServerCore\x64\Debug\pch.obj
+G:\Inflearn\C++\CPP_Server\ServerCore\CoreGlobal.cpp;G:\Inflearn\C++\CPP_Server\ServerCore\x64\Debug\CoreGlobal.obj
+G:\Inflearn\C++\CPP_Server\ServerCore\CorePch.cpp;G:\Inflearn\C++\CPP_Server\ServerCore\x64\Debug\CorePch.obj
+G:\Inflearn\C++\CPP_Server\ServerCore\CoreTLS.cpp;G:\Inflearn\C++\CPP_Server\ServerCore\x64\Debug\CoreTLS.obj
+G:\Inflearn\C++\CPP_Server\ServerCore\pch.cpp;G:\Inflearn\C++\CPP_Server\ServerCore\x64\Debug\pch.obj
+G:\Inflearn\C++\CPP_Server\ServerCore\ThreadManager.cpp;G:\Inflearn\C++\CPP_Server\ServerCore\x64\Debug\ThreadManager.obj

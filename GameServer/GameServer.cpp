@@ -3,44 +3,29 @@
 #include <iostream>
 #include <atomic>
 #include <mutex>
-#include "windows.h"
+#include <Windows.h>
 #include <future>
-#include "ConcurrentQueue.h"
-#include "ConcurrentStack.h"
+#include "ThreadManager.h"
 
-LockQueue<int32> q;
-LockStack<int32> s;
+CoreGlobal Core;
 
-void Push()
+void ThreadMain()
 {
 	while (true)
 	{
-		int32 value = rand() % 100;
-		q.Push(value);
-
-		this_thread::sleep_for(chrono::milliseconds(10));
-	}
-}
-
-void Pop()
-{
-	while (true)
-	{
-		int32 value;
-		q.WaitPop(OUT value);
-		cout << value << endl;
+		cout << "Hello I am thread..." << LThreadId << endl;
+		this_thread::sleep_for(chrono::seconds(1));
 	}
 }
 
 int main()
 {
-	thread t1(Push);
-	thread t2(Pop);
-	thread t3(Pop);
+	for (int i = 0; i < 5; i++)
+	{
+		GThreadManager->Launch(ThreadMain);
+	}
 
-	t1.join();
-	t2.join();
-	t3.join();
+	GThreadManager->Join();
 
 	return 0;
 }
